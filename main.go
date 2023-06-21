@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-		app := fiber.New()
+	app := fiber.New()
 
-		database.MysqlConnection()
-		routes.Setup(app)
+	database.MysqlConnection()
+	routes.Setup(app)
 
-    app.Listen(":3000")
+  app.Listen(":3000")
 }
