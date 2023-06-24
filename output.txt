@@ -1,0 +1,24 @@
+.
+├── app
+│   └── controllers
+│       └── userController.go
+├── configs
+│   └── config.go
+├── database
+│   └── connect.go
+├── ent
+│   ├── generate.go
+│   └── schema
+│       └── user.go
+├── go.mod
+├── go.sum
+├── main.go
+├── middlewares
+│   └── cors-logger.go
+├── output.txt
+├── routes
+│   └── user.go
+└── utils
+    └── connectionURL.go
+
+9 directories, 12 files

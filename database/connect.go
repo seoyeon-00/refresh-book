@@ -2,36 +2,25 @@ package database
 
 import (
 	"fmt"
-	"os"
-	"strconv"
+	"refresh-bookstore/configs"
 	"time"
-	"refresh-bookstore/utils"
+
 	"github.com/jmoiron/sqlx"
-	_ "github.com/go-sql-driver/mysql" 
+	_ "github.com/lib/pq"
 )
 
-func MysqlConnection() (*sqlx.DB, error) {
-
-	maxConn, _ := strconv.Atoi(os.Getenv("DB_MAX_CONNECTIONS"))
-	maxIdleConn, _ := strconv.Atoi(os.Getenv("DB_MAX_IDLE_CONNECTIONS"))
-	maxLifetimeConn, _ := strconv.Atoi(os.Getenv("DB_MAX_LIFETIME_CONNECTIONS"))
-
-	mysqlConnURL, err := utils.ConnectionURL("mysql")
-	if err != nil {
-		return nil, err
-	}
-
-	db, err := sqlx.Connect("mysql", mysqlConnURL)
+func PGConnection(config configs.Config) (*sqlx.DB, error) {
+	db, err := sqlx.Connect("postgres", config.DatabaseURL)
 	if err != nil {
 		return nil, fmt.Errorf("error, not connected to database, %w", err)
 	}
 
-	db.SetMaxOpenConns(maxConn)
-	db.SetMaxIdleConns(maxIdleConn)
-	db.SetConnMaxLifetime(time.Duration(maxLifetimeConn))
+	db.SetMaxOpenConns(config.DBMaxConnections)
+	db.SetMaxIdleConns(config.DBMaxIdleConnections)
+	db.SetConnMaxLifetime(time.Duration(config.DBMaxLifetimeConnections) * time.Second)
 
 	if err := db.Ping(); err != nil {
-		defer db.Close() 
+		defer db.Close()
 		return nil, fmt.Errorf("error, not sent ping to database, %w", err)
 	}
 

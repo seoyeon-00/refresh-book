@@ -11,7 +11,7 @@ func FiberMiddleware(a *fiber.App) {
 
 		// 각 라우트에 CORS 추가하기
 		cors.New(),
-		
+
 		// 로거 추가하기
 		logger.New(),
 	)
