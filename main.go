@@ -48,5 +48,5 @@ func main() {
 	routes.Setup(app)
 
 	// 서버 시작
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":80"))
 }
